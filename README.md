@@ -21,6 +21,16 @@ This repository contains automated tests for the **Yandex Disk REST API** implem
 
 ---
 
+### 🧠 Why Retrofit?
+While **RestAssured** is a popular choice for API testing, I chose **Retrofit 2** for this project to demonstrate a more structured, developer-aligned approach:
+
+* **Type-Safety**: Retrofit uses Java interfaces to define API endpoints, which significantly reduces typos in URLs and parameters compared to the "given-when-then" DSL used in RestAssured.
+* **Separation of Concerns**: By keeping API definitions in `YandexDiskService.java` and test logic in `DiskRetrofitTest.java`, the project remains clean, organized, and easy to maintain.
+* **Production-Ready Skills**: Retrofit is the industry standard for Java and Android development. Mastering this tool demonstrates a deep understanding of how real-world applications handle network layers.
+* **Detailed Logging**: The integration of `HttpLoggingInterceptor` provides a clear and comprehensive overview of request/response cycles in the console, making debugging much more efficient.
+
+---
+
 ## 📋 Prerequisites
 Before running the tests, ensure you have:
 1. A valid **Yandex OAuth Token**.
