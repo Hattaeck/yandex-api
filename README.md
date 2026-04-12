@@ -21,13 +21,13 @@ This repository contains automated tests for the **Yandex Disk REST API** implem
 
 ---
 
-### 🧠 Why Retrofit?
-While **RestAssured** is a popular choice for API testing, I chose **Retrofit 2** for this project to demonstrate a more structured, developer-aligned approach:
+### 💡 Why I picked Retrofit
+Most automation testers use **RestAssured**. It’s great, but for this project, I wanted to try something more "architectural." Here is why I switched to **Retrofit**:
 
-* **Type-Safety**: Retrofit uses Java interfaces to define API endpoints, which significantly reduces typos in URLs and parameters compared to the "given-when-then" DSL used in RestAssured.
-* **Separation of Concerns**: By keeping API definitions in `YandexDiskService.java` and test logic in `DiskRetrofitTest.java`, the project remains clean, organized, and easy to maintain.
-* **Production-Ready Skills**: Retrofit is the industry standard for Java and Android development. Mastering this tool demonstrates a deep understanding of how real-world applications handle network layers.
-* **Detailed Logging**: The integration of `HttpLoggingInterceptor` provides a clear and comprehensive overview of request/response cycles in the console, making debugging much more efficient.
+* **Better Code Structure**: Instead of writing long chains of code for every request, I just define everything in one interface (`YandexDiskService.java`). It keeps the actual tests very clean and easy to read.
+* **Less Typos**: Since Retrofit uses Java interfaces and annotations, I don't have to worry about making a mistake in a URL string or a query parameter name. The compiler catches many errors for me.
+* **Real Dev Tools**: Retrofit is what actual Java/Android developers use to build apps. I wanted to learn how the "pros" handle network requests, not just use a testing-only tool.
+* **Awesome Logs**: Setting up the `HttpLoggingInterceptor` was a game changer. I can see exactly what my test is sending and receiving in the console, which makes debugging way faster.
 
 ---
 
