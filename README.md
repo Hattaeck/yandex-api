@@ -1,48 +1,54 @@
-# Yandex Disk API Automation (Retrofit Version)
+# Yandex Disk API Automation (Retrofit Architecture)
 
-This repository contains automated tests for the **Yandex Disk REST API** implemented using **Retrofit 2**. The project demonstrates an approach to API testing by using an interface-based HTTP client and automated logging.
+This repository contains automated tests for the Yandex Disk REST API implemented using Retrofit 2. The project demonstrates an approach to API testing by using an interface-based HTTP client and automated logging.
 
 ---
 
-## 🚀 Features
-* **Interface-Driven**: Uses `YandexDiskService` interface for clean and readable API definitions.
-* **Full CRUD Coverage**: Tests include getting disk info, creating folders, copying resources, and deleting them.
-* **Network Logging**: Integrated `HttpLoggingInterceptor` to monitor requests and responses in the console.
-* **Dynamic Data**: Generates unique folder names using timestamps to avoid naming conflicts during test execution.
+## 🏗 Project Structure
+The project is organized to keep the code clean and easy to maintain:
 
+* **`BaseTest.java`** — The main setup file. It starts the Retrofit client, turns on logging (to see requests in the console), and handles the Auth token.
+* **`YandexDiskService.java`** — A simple interface where all Yandex API endpoints are listed. This is the only place where we define URLs and HTTP methods.
+* **`DiskPositiveTests.java`** — Regular tests for successful actions: creating folders, copying, moving, and publishing.
+* **`DiskNegativeTests.java`** — Tests for errors: what happens if the token is wrong or a folder doesn't exist.
+* **`HttpStatusCode.java`** — A list of all status codes (like 200, 401, 404) so we don't have to remember the numbers by heart.
 ---
 
 ## 🛠 Tech Stack
 * **Java 17** (Temurin)
-* **Retrofit 2** — Type-safe HTTP client
-* **OkHttp 4** — HTTP client for logging and network management
-* **JUnit 5** — Testing framework
-* **Gson** — JSON serialization/deserialization
+* **Retrofit 2** — Type-safe HTTP client for API definitions.
+* **OkHttp 4** — Includes `HttpLoggingInterceptor` for real-time traffic monitoring.
+* **JUnit 5** — Modern testing framework for assertions and execution.
+* **Gson** — JSON serialization and deserialization.
 
 ---
 
-### 💡 Why I picked Retrofit
-Most automation testers use **RestAssured**. It’s great, but for this project, I wanted to try something more "architectural." Here is why I switched to **Retrofit**:
-
-* **Better Code Structure**: Instead of writing long chains of code for every request, I just define everything in one interface (`YandexDiskService.java`). It keeps the actual tests very clean and easy to read.
-* **Less Typos**: Since Retrofit uses Java interfaces and annotations, I don't have to worry about making a mistake in a URL string or a query parameter name. The compiler catches many errors for me.
-* **Real Dev Tools**: Retrofit is what actual Java/Android developers use to build apps. I wanted to learn how the "pros" handle network requests, not just use a testing-only tool.
-* **Awesome Logs**: Setting up the `HttpLoggingInterceptor` was a game changer. I can see exactly what my test is sending and receiving in the console, which makes debugging way faster.
-
----
-
-## 📋 Prerequisites
-Before running the tests, ensure you have:
-1. A valid **Yandex OAuth Token**.
-2. The token added to your environment variables.
+## 📋 Test Coverage
+The suite covers the primary lifecycle of Yandex Disk resources:
+* **Disk Info**: Verification of account limits and space.
+* **Resource Management**: Creating folders, moving, and copying files.
+* **Public Access**: Publishing and unpublishing resources for external access.
+* **Trash Operations**: Viewing trash content and performing a full permanent cleanup.
+* **Security**: Validating response behavior with incorrect or missing OAuth tokens.
 
 ---
 
-## ⚙️ Configuration
-The tests retrieve the authorization token from an environment variable named `YANDEX_TOKEN`.
+## 💡 Why Retrofit over RestAssured?
+While most automation testers use **RestAssured**, I chose **Retrofit 2** to demonstrate a developer-centric architecture:
 
-### Set Environment Variable
-**Windows (PowerShell):**
-```powershell
-$env:YANDEX_TOKEN="your_token_here"
+1. **Strict Separation**: By separating API definitions from test logic, the framework is much easier to maintain and read.
+2. **Type Safety**: Using Java interfaces reduces runtime errors caused by typos in URLs or parameters. The compiler catches mistakes early.
+3. **Industry Standard**: Retrofit is the tool of choice for actual Java and Android developers. Learning it bridges the gap between QA and Engineering.
+4. **Awesome Debugging**: The `HttpLoggingInterceptor` provides full transparency in the console.
+---
 
+## 🚀 Setup & Execution
+
+### 1. Authentication
+The suite requires a **Yandex OAuth Token**.
+Ensure your token is correctly set in `BaseTest.java` (prefixed with `OAuth `) or configured as an environment variable `YANDEX_TOKEN`.
+
+### 2. Run Tests
+Execute the entire suite via Maven:
+```bash
+mvn clean test

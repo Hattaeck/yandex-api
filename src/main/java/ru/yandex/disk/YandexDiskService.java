@@ -10,8 +10,17 @@ public interface YandexDiskService {
     @GET("v1/disk/resources")
     Call<Void> getResourceInfo(@Header("Authorization") String token, @Query("path") String path);
 
+    @GET("v1/disk/trash/resources")
+    Call<Void> getTrashResources(@Header("Authorization") String token);
+
     @PUT("v1/disk/resources")
     Call<Void> createFolder(@Header("Authorization") String token, @Query("path") String path);
+
+    @PUT("v1/disk/resources/publish")
+    Call<Void> publishResource(@Header("Authorization") String token, @Query("path") String path);
+
+    @PUT("v1/disk/resources/unpublish")
+    Call<Void> unpublishResource(@Header("Authorization") String token, @Query("path") String path);
 
     @POST("v1/disk/resources/copy")
     Call<Void> copyResource(
